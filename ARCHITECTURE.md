@@ -1,4 +1,4 @@
-# 技术架构说明
+﻿# 技术架构说明
 
 > 上市公司年报 RAG 问答系统 — 整体方案、选型决策与设计原理
 
@@ -6,7 +6,7 @@
 
 ## 一、项目定位
 
-本项目以"上市公司年度报告智能问答"为场景，构建一套接近企业级落地标准的 RAG（检索增强生成）系统。数据来自巨潮资讯网（证监会指定披露平台），包含 5 家公司 × 3 年 = 15 份年报 PDF，总量约 85 MB。
+本项目为个人研究项目：以"上市公司年度报告智能问答"为场景，构建一套接近企业级落地标准的 RAG（检索增强生成）系统。数据来自巨潮资讯网（证监会指定披露平台），包含 5 家公司 × 3 年 = 15 份年报 PDF，总量约 85 MB。
 
 项目同时提供两套实现：
 
@@ -87,7 +87,7 @@ chunk_size=500字符，overlap=50字符
 ```
 - 优点：简单可预测
 - 缺点：无视句子/段落边界，表格被截断
-- 用途：作为 baseline，体现"不好的分块"的代价
+- 用途：作为消融实验的 baseline 对照组
 
 #### 策略 B：语义分块（`semantic`）—— 默认
 ```
@@ -146,7 +146,7 @@ resp = client.embeddings.create(
 | 运行方式 | 本地 CPU 推理（sentence-transformers） |
 | 模型大小 | ~90 MB，下载到项目 `models/` 目录 |
 
-选型对比教学价值：两种方案召回结果对同一问题给出相同答案（`14,769,360.50万元`），但BGE 完全离线，text-embedding-v3 按量计费、无需本地 GPU。
+选型对比：两种方案对同一问题的召回结果一致，但 BGE 完全离线，text-embedding-v3 按量计费、无需本地 GPU。
 
 ---
 
@@ -308,7 +308,7 @@ rag_annual_report/
 │   ├── build_index.py           # chunks → FAISS 向量索引
 │   ├── rag_pipeline.py          # 问答流水线（BM25+向量+RRF+Rerank+LLM）
 │   ├── serve.py                 # FastAPI HTTP 服务
-│   └── static/index.html        # 教学可视化 Web 页面
+│   └── static/index.html        # 可视化 Web 页面
 │
 ├── src_langchain/               # LangChain 版（本地 BGE + DashScope LLM）
 │   ├── download_model.py        # BGE 模型下载到 models/ 目录

@@ -3,8 +3,8 @@ RAG 问答 HTTP 服务（FastAPI）
 
 提供两类接口：
   /query        — 标准问答，返回答案 + 引用
-  /query/debug  — 教学调试接口，逐步返回每个检索阶段的中间结果
-  /             — 教学可视化 Web 页面
+  /query/debug  — 调试接口，逐步返回每个检索阶段的中间结果
+  /             — 可视化 Web 页面
 
 启动：
   cd src
@@ -66,7 +66,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(
     title       = "年报 RAG 问答服务",
-    description = "FAISS + BM25 混合检索 + DashScope qwen-plus，含教学调试接口",
+    description = "FAISS + BM25 混合检索 + DashScope qwen-plus，含调试接口",
     version     = "1.0.0",
     lifespan    = lifespan,
 )
@@ -160,7 +160,7 @@ def _filter_meta(req: QueryRequest) -> Optional[dict]:
 
 @app.get("/", include_in_schema=False)
 def index():
-    """返回教学可视化页面。"""
+    """返回可视化页面。"""
     return FileResponse(_STATIC_DIR / "index.html")
 
 
@@ -187,10 +187,10 @@ def query(req: QueryRequest):
     )
 
 
-@app.post("/query/debug", response_model=DebugResponse, summary="教学调试：逐步返回中间结果")
+@app.post("/query/debug", response_model=DebugResponse, summary="调试：逐步返回中间结果")
 def query_debug(req: QueryRequest):
     """
-    教学专用接口，逐步执行 RAG 流水线并返回每步的中间结果：
+    调试接口，逐步执行 RAG 流水线并返回每步的中间结果：
 
     1. 向量检索（vec_results）：FAISS 召回 Top-10，含余弦相似度分数
     2. BM25 检索（bm25_results）：关键词召回 Top-10，含 BM25 分数

@@ -105,7 +105,7 @@ def build_faiss_index(chunks: list[dict], client: OpenAI):
 
     FAISS 说明：
       IndexFlatIP = 暴力内积检索，精确但不近似。
-      数据量 < 10 万时速度完全够用，是教学的首选。
+      数据量 < 10 万时速度完全够用，是首选方案。
       数据量更大时可换 IndexIVFFlat（需要 train）或 IndexHNSW。
     """
     import faiss

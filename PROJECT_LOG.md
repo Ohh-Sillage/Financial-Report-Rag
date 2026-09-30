@@ -1,4 +1,4 @@
-# RAG 教学项目记录文档
+# RAG 项目开发记录
 
 > 持续更新，记录每个环节的决策、踩坑和补充信息
 
@@ -6,7 +6,7 @@
 
 ## 项目背景
 
-**目标**：为大模型 RAG 教学课程构建一个接近企业级落地的完整项目，让学生获得真实的工程经验。
+**目标**：个人研究项目——以真实的上市公司年报为数据源，完整实践并深入研究 RAG（检索增强生成）系统的工程链路：数据获取、PDF 解析、分块、检索增强与量化评估。
 
 **场景选型**：上市公司年度报告问答系统
 - 数据来源：巨潮资讯网（cninfo.com.cn，证监会指定披露平台，公开合法）
@@ -38,7 +38,7 @@
 
 **总计**：15 份，约 85 MB
 
-### 数据特点（教学价值）
+### 数据特点
 
 - 文件大小差异大（2.1M ~ 9.7M），PDF 内容密度不同
 - 茅台/平安：标题含公司名；宁德/海康/五粮液：标题不含公司名 → 搜索策略要适配
@@ -81,7 +81,7 @@
 | 分块策略 | 固定/语义/层级三种可切换 | RecursiveCharacterTextSplitter |
 | Embedding | **DashScope text-embedding-v3**（API，无需本地模型）| **本地 BAAI/bge-small-zh-v1.5**（下载到 models/）|
 | 向量库 | FAISS（手动管理）| LangChain FAISS 封装 |
-| 关键词检索 | jieba + rank_bm25 | 无（LangChain 版聚焦框架演示）|
+| 关键词检索 | jieba + rank_bm25 | 无（LangChain 版聚焦框架实现）|
 | 融合策略 | RRF（Reciprocal Rank Fusion）| 无 |
 | Reranker | CrossEncoder bge-reranker-base（可选）| 无 |
 | 查询改写 | qwen-turbo（可选，--query-rewrite 开启）| 无 |
@@ -108,7 +108,7 @@ rag_annual_report/
 │   ├── build_index.py           ✅ FAISS 索引（DashScope embedding）
 │   ├── rag_pipeline.py          ✅ 问答流水线（BM25+混合+Rerank+QueryRewrite）
 │   ├── serve.py                 ✅ FastAPI HTTP 服务
-│   └── static/index.html        ✅ 教学可视化 Web 页面
+│   └── static/index.html        ✅ 可视化 Web 页面
 ├── src_langchain/               # LangChain 实现
 │   ├── download_model.py        ✅ BGE 模型下载到 models/ 目录
 │   ├── build_index_lc.py        ✅ FAISS 索引（本地 BGE embedding）
