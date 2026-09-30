@@ -1,0 +1,38 @@
+# ==================== Python ====================
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+env/
+
+# ==================== IDE / 编辑器 ====================
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# ==================== 环境变量与密钥 ====================
+.env
+.env.*
+
+# ==================== 大数据与流水线产物（可由脚本重新生成）====================
+# 原始 PDF（约 85 MB，可用 src/download_reports.py 重新下载）
+data/raw_pdf/
+# PDF 解析结果（可用 src/parse_pdf.py 重新生成）
+data/parsed/
+# 分块结果（可用 src/chunk_documents.py 重新生成）
+data/chunks/
+# 向量索引（约 77 MB，可用 build_index.py / build_index_lc.py 重建）
+vectorstore/
+# 本地模型权重（BGE ~90 MB、Reranker ~278 MB，由 download_model.py 下载）
+models/
+
+# ==================== 运行产物 ====================
+*.log
